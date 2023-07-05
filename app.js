@@ -1,7 +1,7 @@
-import inquirer from 'inquirer';
+import inquirer from "inquirer";
+import fs from "fs";
+import generatePage from "./src/page-template.js";
 
-//import generatePage from 'generatePage';
-//import fs from 'fs';
 
 const promptUser = () => {
   return inquirer.prompt([
@@ -12,7 +12,7 @@ const promptUser = () => {
       validate: nameInput => {
         if (nameInput) {
           return true;
-        } else {
+        } else { 
           console.log('Please enter your name!');
           return false;
         }
@@ -129,12 +129,15 @@ Add a New Project
 
 promptUser()
   .then(promptProject)
-  .then(portfolioData => {
-    console.log(portfolioData);
-    // will be uncommented in lesson 4
-    // const pageHTML = generatePage(portfolioData);
-    // fs.writeFile('./index.html', pageHTML, err => {
-    //   if (err) throw new Error(err);
-    //   console.log('Page created! Check out index.html in this directory to see it!');
-    // });
+  .then((portfolioData) => {
+    const pageHTML = generatePage(portfolioData);
+
+    fs.writeFile("./index.html", pageHTML, (err) => {
+      if (err) throw new Error(err);
+
+      console.log(
+        "Page created! Check out index.html in this directory to see it!"
+      );
+    });
   });
+
